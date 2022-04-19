@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.totalplay.usuarios.dao.SelectDao">
+
+	<select id="getStatus" resultType="StatsuVo">
+		SELECT
+			DUMMY MESSAGE,
+			TO_CHAR(SYSDATE, 'DD/MM/YYYY') DATES
+		FROM DUAL
+	</select>
+
+	<select id="getAllUser" resultType="UserModel">
+		SELECT
+			TPGUID ID,
+			USERNAME,
+			NAME,
+			ENABLED,
+			TO_CHAR(CREATED, 'DD/MM/YYYY HH24:MI') CREATED
+		FROM TPG_USUARIOS
+			WHERE TPGUID  <![CDATA[<>]]> 0
+	</select>
+	
+	<select id="getUser" resultType="UserModel">
+		SELECT
+			TPGUID ID,
+			USERNAME,
+			NAME,
+			ENABLED,
+			TO_CHAR(CREATED, 'DD/MM/YYYY HH24:MI') CREATED
+		FROM TPG_USUARIOS
+			WHERE TPGUID  = #{id}
+	</select>
+
+	<select id="getRole" resultType="String">
+		SELECT
+			TR.ROLE
+		FROM TPG_ROLE TR
+			INNER JOIN TPG_USERROLE TUR ON TR.TPGRID = TUR.TPGRID
+		WHERE TUR.TPGUID = #{id}
+	</select>
+
+	<select id="getRoles" resultType="CatalogoModel">
+		SELECT
+			TPGRID ID,
+			ROLE,
+			DESCRIPCION,
+			ENABLED
+		FROM TPG_ROLE
+	</select>
+
+	<delete id="deleteRole">
+		DELETE
+			FROM TPG_USERROLE
+		WHERE TPGUID = #{id}
+	</delete>
+
+	<insert id="setUser" useGeneratedKeys="true" keyProperty="user.id" keyColumn="TPGUID">
+		INSERT INTO TPG_USUARIOS(
+			TPGUID,
+			USERNAME,
+			NAME,
+			PASSWORD,
+			CREATED
+		)VALUES(
+			STPGUID.NEXTVAL,
+			#{user.username},
+			#{user.name},
+			#{user.password},
+			SYSDATE
+		)
+	</insert>
+
+	<insert id="setUserRole">
+		INSERT INTO TPG_USERROLE(
+			TPGUID,
+			TPGRID
+		)VALUES(
+			#{iduser},
+			#{idrole}
+		)
+	</insert>
+	
+	<update id="updateUser" >
+		UPDATE TPG_USUARIOS SET
+			USERNAME = #{user.username},
+			NAME = #{user.name},
+			<if test="user.password != null">
+				PASSWORD = #{user.password},
+			</if>	
+			ENABLED = 1,		
+			MODIFIED = SYSDATE
+		WHERE TPGUID = #{user.id}
+	</update>
+	
+	<update id="deleteUser" parameterType="Integer">
+		UPDATE TPG_USUARIOS SET
+			ENABLED = 0,
+			MODIFIED = SYSDATE
+		WHERE TPGUID = #{id}
+	</update>
+</mapper>
