@@ -60,13 +60,15 @@
 			USERNAME,
 			NAME,
 			PASSWORD,
-			CREATED
+			CREATED,
+			TPGCUID
 		)VALUES(
 			STPGUID.NEXTVAL,
 			#{user.username},
 			#{user.name},
 			#{user.password},
-			SYSDATE
+			SYSDATE,
+			#{user.areaID}
 		)
 	</insert>
 
