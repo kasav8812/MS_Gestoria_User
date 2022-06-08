@@ -68,7 +68,7 @@
 			#{user.name},
 			#{user.password},
 			SYSDATE,
-			#{user.tpgcuid}
+			#{user.areaID}
 		)
 	</insert>
 

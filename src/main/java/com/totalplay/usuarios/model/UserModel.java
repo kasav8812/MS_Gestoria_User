@@ -21,6 +21,7 @@ public class UserModel implements Serializable{
 	private boolean enabled;
 	private String created;
 	private String areaID;
+	private String email;
 	private List<String> role;	
 	private List<Integer> rol;
 	@JsonInclude(Include.NON_NULL)

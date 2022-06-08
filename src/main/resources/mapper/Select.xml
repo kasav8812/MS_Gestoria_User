@@ -13,6 +13,8 @@
 		SELECT
 			TPGUID ID,
 			USERNAME,
+			TPGCUID areaID,
+			MAIL email,
 			NAME,
 			ENABLED,
 			TO_CHAR(CREATED, 'DD/MM/YYYY HH24:MI') CREATED
@@ -24,6 +26,8 @@
 		SELECT
 			TPGUID ID,
 			USERNAME,
+			TPGCUID areaID,
+			MAIL email,
 			NAME,
 			ENABLED,
 			TO_CHAR(CREATED, 'DD/MM/YYYY HH24:MI') CREATED
@@ -61,14 +65,16 @@
 			NAME,
 			PASSWORD,
 			CREATED,
-			TPGCUID
+			TPGCUID,
+			MAIL
 		)VALUES(
 			STPGUID.NEXTVAL,
 			#{user.username},
 			#{user.name},
 			#{user.password},
 			SYSDATE,
-			#{user.areaID}
+			#{user.areaID},
+			#{user.email}
 		)
 	</insert>
 

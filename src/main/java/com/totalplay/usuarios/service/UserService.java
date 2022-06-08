@@ -55,6 +55,7 @@ public class UserService {
 		user.setRole(selectDao.getRole(user.getId()));
 		user.setPassword(null);
 		user.setRol(null);
+	
 		return user;
 	}
 
