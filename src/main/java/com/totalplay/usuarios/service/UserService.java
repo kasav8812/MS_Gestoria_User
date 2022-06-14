@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.totalplay.usuarios.dao.SelectDao;
 import com.totalplay.usuarios.model.UserModel;
+import com.totalplay.usuarios.model.UserAreaModel;
 
 @Service
 @Transactional
@@ -38,6 +39,14 @@ public class UserService {
 		user.setEnabled(true);
 		user.setPassword(null);
 		user.setRol(null);
+		return user;
+	}
+	
+	@Transactional
+	public UserAreaModel setAreaUser(UserAreaModel user) {
+		selectDao.setAreaUser(user);
+		user.setTpgcuid(null);;
+		user.setTpguid(null);
 		return user;
 	}
 	

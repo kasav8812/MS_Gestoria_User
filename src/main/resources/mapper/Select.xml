@@ -88,6 +88,16 @@
 		)
 	</insert>
 	
+	<insert id="setUserAreas">
+		INSERT INTO TPGC_USUARIOS_AREAS(
+			TPGUID,
+			TPGCUID
+		)VALUES(
+			#{user.tpguid},
+			#{user.tpgcuid}
+		)
+	</insert>
+	
 	<update id="updateUser" >
 		UPDATE TPG_USUARIOS SET
 			USERNAME = #{user.username},

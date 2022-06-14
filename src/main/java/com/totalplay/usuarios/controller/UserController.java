@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.totalplay.usuarios.model.UserModel;
+import com.totalplay.usuarios.model.UserAreaModel;
 import com.totalplay.usuarios.service.UserService;
 
 
@@ -37,6 +38,11 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body(userService.setUser(user));
 	}
 	
+	@PostMapping("/usuariosAreas")
+	public ResponseEntity<UserAreaModel> setUsuarioAreas(@RequestBody UserAreaModel user) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK).body(userService.setAreaUser(user));
+	}
+	
 	@PutMapping
 	public ResponseEntity<UserModel> updateUsuario(@RequestBody UserModel user) throws Exception {
 		return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(user));
@@ -46,4 +52,6 @@ public class UserController {
 	public ResponseEntity<UserModel> deleteUsuario(@PathVariable("id") Integer id) throws Exception {		
 		return ResponseEntity.status(HttpStatus.OK).body(userService.deleteUser(id));
 	}
+	
+	
 }

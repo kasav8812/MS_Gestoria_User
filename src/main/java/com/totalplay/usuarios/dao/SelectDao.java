@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.totalplay.usuarios.model.CatalogoModel;
 import com.totalplay.usuarios.model.StatsuVo;
 import com.totalplay.usuarios.model.UserModel;
+import com.totalplay.usuarios.model.UserAreaModel;
 
 @Mapper
 public interface SelectDao {
@@ -23,6 +24,8 @@ public interface SelectDao {
 	void deleteRole(Integer id);
 
 	Integer setUser(@Param("user") UserModel user);
+
+	Integer setAreaUser(@Param("user") UserAreaModel user);
 
 	Integer setUserRole(@Param("iduser") Integer iduser, @Param("idrole") Integer idrole);
 	
