@@ -90,9 +90,11 @@
 	
 	<insert id="setUserAreas">
 		INSERT INTO TPGC_USUARIOS_AREAS(
+			TPGC_USUARIOS_ID,
 			TPGUID,
 			TPGCUID
 		)VALUES(
+			TPGCUSUARIOSAREAS_sequ.NEXTVAL,
 			#{user.tpguid},
 			#{user.tpgcuid}
 		)
@@ -115,5 +117,50 @@
 			ENABLED = 0,
 			MODIFIED = SYSDATE
 		WHERE TPGUID = #{id}
+	</update>
+	
+	<insert id="addUserRelationShip">
+		INSERT INTO TPG_USUARIOS_RELACION(
+			TPGUSUARIOSID,
+			TPGCUID_AD,
+			TPGCUID_OP
+		)VALUES(
+			TPGUSUARIOSREL_seq.NEXTVAL,
+			#{user.tpguid_ad},
+			#{user.tpguid_op}
+		)
+	</insert>
+	
+	<select id="getUserByEstado" resultType="UserModel">
+		       <!-- select DISTINCT TU.USERNAME,
+		         TU.NAME
+		         FROM TPG_USUARIOS TU 
+		         INNER JOIN tpgc_usuarios_areas ON 
+		         (TU.TPGUID = '3'  AND tpgc_usuarios_areas.tpgcuid = #{id))}-->
+		        
+		        select TPG_USUARIOS.username, 
+		        TPG_USUARIOS.NAME 
+		        FROM TPG_USERROLE 
+		        INNER JOIN TPG_USUARIOS ON (TPG_USERROLE.TPGUID = TPG_USUARIOS.tpguid and TPG_USERROLE.tpgrid = '3')
+
+	</select>
+	
+	<select id="getUserByAdmin" resultType="UserModel">
+		        select TPG_USUARIOS.username, 
+		        TPG_USUARIOS.NAME,
+                tpg_usuarios.mail email
+		        FROM TPG_USUARIOS 
+		        INNER JOIN tpg_usuarios_relacion ON (tpg_usuarios.username = tpg_usuarios_relacion.tpgcuid_op and tpg_usuarios_relacion.tpgcuid_ad = #{id})
+
+	</select>
+	
+	
+	 <update id="updateUsr" >
+		UPDATE TPG_USUARIOS 
+		    SET NAME = #{user.name},
+		    	MAIL = #{user.email}
+		    
+		where
+            USERNAME = #{user.username}
 	</update>
 </mapper>

@@ -9,6 +9,8 @@ import com.totalplay.usuarios.model.CatalogoModel;
 import com.totalplay.usuarios.model.StatsuVo;
 import com.totalplay.usuarios.model.UserModel;
 import com.totalplay.usuarios.model.UserAreaModel;
+import com.totalplay.usuarios.model.UserRelationShip;
+
 
 @Mapper
 public interface SelectDao {
@@ -25,7 +27,9 @@ public interface SelectDao {
 
 	Integer setUser(@Param("user") UserModel user);
 
-	Integer setAreaUser(@Param("user") UserAreaModel user);
+	Integer setUserAreas(@Param("user") UserAreaModel user);
+
+	Integer addUserRelationShip(@Param("user") UserRelationShip user);
 
 	Integer setUserRole(@Param("iduser") Integer iduser, @Param("idrole") Integer idrole);
 	
@@ -34,4 +38,12 @@ public interface SelectDao {
 	Integer deleteUser(@Param("id") Integer id);
 	
 	UserModel getUser(@Param("id") Integer id);
+	
+	
+	List<UserModel> getUserByEstado(@Param("id") String id);
+
+	List<UserModel> getUserByAdmin(@Param("id") String id);
+
+	void updateUsr(@Param("user") UserModel user);
+
 }

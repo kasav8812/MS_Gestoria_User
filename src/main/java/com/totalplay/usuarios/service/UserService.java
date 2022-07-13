@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.totalplay.usuarios.dao.SelectDao;
 import com.totalplay.usuarios.model.UserModel;
 import com.totalplay.usuarios.model.UserAreaModel;
+import com.totalplay.usuarios.model.UserRelationShip;
+
 
 @Service
 @Transactional
@@ -43,12 +45,22 @@ public class UserService {
 	}
 	
 	@Transactional
-	public UserAreaModel setAreaUser(UserAreaModel user) {
-		selectDao.setAreaUser(user);
-		user.setTpgcuid(null);;
-		user.setTpguid(null);
+	public UserAreaModel setUserAreas(UserAreaModel[] user) {
+		UserAreaModel mUser = new UserAreaModel();
+		for(UserAreaModel mItem: user) {
+			mUser = mItem;
+			selectDao.setUserAreas(mItem);
+		}
+	
+		return mUser;
+	}
+	
+	@Transactional
+	public UserRelationShip addUserRelationShip(UserRelationShip user) {
+		selectDao.addUserRelationShip(user);
 		return user;
 	}
+	
 	
 	@Transactional
 	public UserModel updateUser(UserModel user) {
@@ -76,6 +88,23 @@ public class UserService {
 		user = selectDao.getUser(id);
 		user.setRole(selectDao.getRole(id));
 		return user;
+	}
+	
+
+	public  List<UserModel> getUserByEstado(String id) {
+		return selectDao.getUserByEstado(id);
+	}
+	
+	public  List<UserModel> getUserByAdmin(String id) {
+		return selectDao.getUserByAdmin(id);
+	}
+
+	
+	
+	@Transactional
+	public UserModel updateUsr(UserModel usr) {
+		 selectDao.updateUsr(usr);
+		 return selectDao.getUser(usr.getId());
 	}
 
 }

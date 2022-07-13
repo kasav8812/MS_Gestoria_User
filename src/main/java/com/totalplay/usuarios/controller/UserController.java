@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.totalplay.usuarios.model.UserModel;
 import com.totalplay.usuarios.model.UserAreaModel;
+import com.totalplay.usuarios.model.UserRelationShip;
 import com.totalplay.usuarios.service.UserService;
 
 
@@ -39,8 +40,15 @@ public class UserController {
 	}
 	
 	@PostMapping("/usuariosAreas")
-	public ResponseEntity<UserAreaModel> setUsuarioAreas(@RequestBody UserAreaModel user) throws Exception {
-		return ResponseEntity.status(HttpStatus.OK).body(userService.setAreaUser(user));
+	public ResponseEntity<UserAreaModel> setUsuarioAreas(@RequestBody UserAreaModel[] user) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK).body(userService.setUserAreas(user));
+	}
+	
+	
+	
+	@PostMapping("/addUserRelationShip")
+	public ResponseEntity<UserRelationShip> addUserRelationShip(@RequestBody UserRelationShip user) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK).body(userService.addUserRelationShip(user));
 	}
 	
 	@PutMapping
@@ -51,6 +59,23 @@ public class UserController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<UserModel> deleteUsuario(@PathVariable("id") Integer id) throws Exception {		
 		return ResponseEntity.status(HttpStatus.OK).body(userService.deleteUser(id));
+	}
+	
+	@GetMapping("getUserByEstado/{id}")
+	public ResponseEntity<List<UserModel>> getUserByEstado(@PathVariable("id") String id) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByEstado(id));
+	}
+	
+	
+	@GetMapping("getUserByAdmin/{id}")
+	public ResponseEntity<List<UserModel>> getUserByAdmin(@PathVariable("id") String id) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByAdmin(id));
+	}
+	
+	
+	@PostMapping("/updateUsr")
+	public ResponseEntity<UserModel> updateUsr(@RequestBody UserModel user) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK).body(userService.updateUsr(user));
 	}
 	
 	
