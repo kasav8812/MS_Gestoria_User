@@ -78,5 +78,14 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body(userService.updateUsr(user));
 	}
 	
+	@GetMapping("recoverEmailUser/{id}")
+	public ResponseEntity<List<UserModel>> recoverEmailUser(@PathVariable("id") String id) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK).body(userService.recoverEmailUser(id));
+	}
+	
+	@PostMapping("/changePass")
+	public ResponseEntity<UserModel> changePass(@RequestBody UserModel user) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK).body(userService.changePass(user));
+	}
 	
 }

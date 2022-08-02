@@ -85,7 +85,7 @@ public class UserService {
 		UserModel user = new UserModel();
 		selectDao.deleteUser(id);
 		System.out.println("fin: "+id );
-		user = selectDao.getUser(id);
+		user = selectDao.getUser(id.toString());
 		user.setRole(selectDao.getRole(id));
 		return user;
 	}
@@ -98,13 +98,26 @@ public class UserService {
 	public  List<UserModel> getUserByAdmin(String id) {
 		return selectDao.getUserByAdmin(id);
 	}
-
+	
 	
 	
 	@Transactional
 	public UserModel updateUsr(UserModel usr) {
 		 selectDao.updateUsr(usr);
-		 return selectDao.getUser(usr.getId());
+		 return selectDao.getUser(usr.getId().toString());
+	}
+	
+	public  List<UserModel> recoverEmailUser(String id) {
+		return selectDao.recoverEmailUser(id);
+	}
+	
+	@Transactional
+	public UserModel changePass(UserModel user) {
+			if(user.getPassword()!=null) {
+			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+			}	
+		 selectDao.changePass(user);
+		 return selectDao.getUser(user.getUsername());
 	}
 
 }

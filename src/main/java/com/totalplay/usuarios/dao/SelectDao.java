@@ -37,7 +37,7 @@ public interface SelectDao {
 
 	Integer deleteUser(@Param("id") Integer id);
 	
-	UserModel getUser(@Param("id") Integer id);
+	UserModel getUser(@Param("id") String id);
 	
 	
 	List<UserModel> getUserByEstado(@Param("id") String id);
@@ -45,5 +45,9 @@ public interface SelectDao {
 	List<UserModel> getUserByAdmin(@Param("id") String id);
 
 	void updateUsr(@Param("user") UserModel user);
+
+	List<UserModel> recoverEmailUser(@Param("id") String id);
+	
+	void changePass(@Param("user") UserModel user);
 
 }

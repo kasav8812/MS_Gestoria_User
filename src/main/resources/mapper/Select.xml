@@ -32,7 +32,7 @@
 			ENABLED,
 			TO_CHAR(CREATED, 'DD/MM/YYYY HH24:MI') CREATED
 		FROM TPG_USUARIOS
-			WHERE TPGUID  = #{id}
+			WHERE TPGUID  = #{id} OR USERNAME = #{id}
 	</select>
 
 	<select id="getRole" resultType="String">
@@ -150,7 +150,7 @@
 		        TPG_USUARIOS.NAME,
                 tpg_usuarios.mail email
 		        FROM TPG_USUARIOS 
-		        INNER JOIN tpg_usuarios_relacion ON (tpg_usuarios.username = tpg_usuarios_relacion.tpgcuid_op and tpg_usuarios_relacion.tpgcuid_ad = #{id})
+		        INNER JOIN tpg_usuarios_relacion ON (tpg_usuarios.username = tpg_usuarios_relacion.tpgcuid_op and tpg_usuarios_relacion.tpgcuid_ad = #{id} and tpg_usuarios.enabled = '1')
 
 	</select>
 	
@@ -158,8 +158,29 @@
 	 <update id="updateUsr" >
 		UPDATE TPG_USUARIOS 
 		    SET NAME = #{user.name},
-		    	MAIL = #{user.email}
-		    
+		    	MAIL = #{user.email},
+		    	ENABLED = #{user.enabled}
+		where
+            USERNAME = #{user.username}
+	</update>
+	
+	<select id="recoverEmailUser" resultType="UserModel">
+		SELECT
+			TPGUID ID,
+			USERNAME,
+			TPGCUID areaID,
+			MAIL email,
+			NAME,
+			ENABLED,
+			TO_CHAR(CREATED, 'DD/MM/YYYY HH24:MI') CREATED,
+			PASSWORD
+		FROM TPG_USUARIOS
+			WHERE MAIL  = #{id} OR USERNAME = #{id}
+	</select>
+	
+	 <update id="changePass" >
+		UPDATE TPG_USUARIOS 
+		    SET PASSWORD = #{user.password}
 		where
             USERNAME = #{user.username}
 	</update>
